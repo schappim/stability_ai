@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "httparty", "~> 0.20.0"
   spec.add_dependency "dotenv", "~> 2.8"
   spec.add_dependency "mini_magick"
-  spec.version = "0.1.1"
+  spec.version = "0.1.12"
 
 
   # For more information and examples about making a new gem, check out our

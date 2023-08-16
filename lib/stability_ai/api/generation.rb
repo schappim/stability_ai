@@ -149,25 +149,30 @@ module StabilityAI
         image = MiniMagick::Image.read(image_payload)#.first
         image.format = 'PNG' if %w[JPG JPEG].include?(image.type)
 
-        if image.columns % 64 != 0 || image.rows % 64 != 0
+        if image.width % 64 != 0 || image.height % 64 != 0
           # Calculate new dimensions
-          new_width, new_height = get_new_dimensions(image.columns, image.rows)
+          new_width, new_height = get_new_dimensions(image.width, image.height)
 
-          # Resize the image while maintaining aspect ratio
-          image.change_geometry("#{new_width}x#{new_height}") do |cols, rows, img|
-            img.resize!(cols, rows)
-          end
+          # # Resize the image while maintaining aspect ratio
+          # image.change_geometry("#{new_width}x#{new_height}") do |cols, rows, img|
+          #   img.resize!(cols, rows)
+          # end
+
+          image.resize("#{new_width}x#{new_height}")
 
           # Find the nearest multiples of 64 for both width and height
-          width_multiple = (image.columns / 64.0).floor * 64
-          height_multiple = (image.rows / 64.0).floor * 64
+          width_multiple = (image.width / 64.0).floor * 64
+          height_multiple = (image.height / 64.0).floor * 64
 
           # Calculate new offsets for cropping
-          x_offset = (image.columns - width_multiple) / 2
-          y_offset = (image.rows - height_multiple) / 2
+          x_offset = (image.width - width_multiple) / 2
+          y_offset = (image.height - height_multiple) / 2
 
           # Crop the centered part to ensure dimensions are multiples of 64
-          image.crop!(x_offset, y_offset, width_multiple, height_multiple)
+          # image.crop!(x_offset, y_offset, width_multiple, height_multiple)
+          crop_params="#{width_multiple}x#{height_multiple}+#{x_offset}+#{y_offset}"
+
+          image.crop(crop_params)
         end
         image
       end

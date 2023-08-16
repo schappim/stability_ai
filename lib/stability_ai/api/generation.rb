@@ -91,7 +91,7 @@ module StabilityAI
       def create_temp_file_from_image(image)
         temp_file = Tempfile.new(['image', '.png'])
         temp_file.binmode
-        image.format = 'PNG' # Set the format explicitly before calling to_blob
+        image.type = 'PNG' # Set the format explicitly before calling to_blob
         temp_file.write(image.to_blob)
         temp_file.flush
         temp_file.rewind
@@ -147,7 +147,7 @@ module StabilityAI
       def convert_and_resize_image(image_payload)
         # Convert the input image to PNG format if it's a JPG or JPEG file
         image = MiniMagick::Image.read(image_payload)#.first
-        image.format = 'PNG' if %w[JPG JPEG].include?(image.type)
+        image.type = 'PNG' if %w[JPG JPEG].include?(image.type)
 
         if image.width % 64 != 0 || image.height % 64 != 0
           # Calculate new dimensions

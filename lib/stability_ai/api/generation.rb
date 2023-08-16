@@ -1,5 +1,5 @@
 require "uri"
-require "rmagick"
+require "mini_magick"
 
 module StabilityAI
   module API
@@ -146,7 +146,7 @@ module StabilityAI
 
       def convert_and_resize_image(image_payload)
         # Convert the input image to PNG format if it's a JPG or JPEG file
-        image = Magick::Image.from_blob(image_payload).first
+        image = MiniMagick::Image.from_blob(image_payload).first
         image.format = 'PNG' if %w[JPG JPEG].include?(image.format)
 
         if image.columns % 64 != 0 || image.rows % 64 != 0

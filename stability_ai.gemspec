@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   # spec.add_dependency "example-gem", "~> 1.0"
   spec.add_dependency "httparty", "~> 0.20.0"
   spec.add_dependency "dotenv", "~> 2.7.0"
-  spec.add_dependency "rmagick"
+  spec.add_dependency "mini_magick"
   spec.version = "0.1.0"
 
 
